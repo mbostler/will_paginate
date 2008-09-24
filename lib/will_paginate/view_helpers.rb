@@ -210,6 +210,7 @@ module WillPaginate
     # * +options+ are forwarded from +will_paginate+ view helper
     # * +template+ is the reference to the template being rendered
     def prepare(collection, options, template)
+      @remote = options.delete(:remote) || {} # included for ajaxy pagination
       @collection = collection
       @options    = options
       @template   = template
@@ -297,7 +298,11 @@ module WillPaginate
     end
 
     def page_link(page, text, attributes = {})
-      @template.link_to text, url_for(page), attributes
+      if @remote.empty? # "unajaxy" pagination
+        @template.link_to text, url_for(page), attributes
+      else # ajaxy pagination
+        @template.link_to_remote(text, {:url => url_for(page), :method => :get}.merge(@remote))
+      end
     end
 
     def page_span(page, text, attributes = {})
@@ -380,4 +385,5 @@ module WillPaginate
       end
     end
   end
+  
 end
