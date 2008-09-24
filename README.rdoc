@@ -105,3 +105,13 @@ More reading about pagination as design pattern:
 Want to discuss, request features, ask questions? Join the
 {Google group}[http://groups.google.com/group/will_paginate].
 
+== Pagination with AJAX
+
+To implement pagination with AJAX, just do the following:
+
+<div id="posts">
+  <%= render :partial => @posts %>
+  <%= will_paginate(@posts, :remote => {:update => 'posts', :loading => "$('pagination_links').replace('Loading...');"}, :id => 'pagination_links') %>
+</div>
+
+To not use AJAX, leave out the :remote hash.
