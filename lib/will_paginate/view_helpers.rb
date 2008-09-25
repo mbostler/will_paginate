@@ -301,7 +301,7 @@ module WillPaginate
       if @remote.empty? # "unajaxy" pagination
         @template.link_to text, url_for(page), attributes
       else # ajaxy pagination
-        @template.link_to_remote(text, {:url => url_for(page), :method => :get}.merge(@remote))
+        @template.link_to_remote(text, {:url => url_for(page), :method => :get}.merge(@remote), :href => url_for(page))
       end
     end
 
